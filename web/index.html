@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="Graphs for TG">
+		<meta name="author" content="lasse.cloud">
+		<link rel="icon" href="favicon.ico">
+
+		<title>Tech:Graph</title>
+
+		<!-- Bootstrap core CSS -->
+		<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+		<link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css"/>
+
+		<!-- Custom styles for this template -->
+		<link href="dashboard.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+			<a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Tech:Graph</a>
+			<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+			<ul class="navbar-nav px-3">
+				<li class="nav-item text-nowrap">
+					<a class="nav-link" href="https://weathermap.tg18.gathering.org/">Weathermap</a>
+				</li>
+			</ul>
+		</nav>
+
+		<div class="container-fluid" id="app">
+			<div class="row">
+				<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+					<div class="sidebar-sticky">
+						<ul class="nav flex-column" v-for="(value, key, index) in results">
+							<li class="nav-item">
+								<a class="nav-link" :class="{active:key == selected}" @click="selected = key" v-on:click="getSwitch()" href="#">
+									<span data-feather="box"></span>{{key}}</a>
+							</li>
+							<li class="nav-item switchIndent" v-for="(value, key, index) in value">
+								<a class="nav-link" :class="{active:value == selected}" @click="selected = value"
+									v-on:click="getSwitch(selected)" href="#">
+									<span data-feather="codepen"></span>{{value}}</a>
+							</li>
+						</ul>
+						<br>
+					</div>
+				</nav>
+
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+					<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+						<h1 class="h2">{{selected}}</h1>
+						<div class="btn-toolbar mb-2 mb-md-0">
+							<div class="btn-group mr-2">
+								<button class="btn btn-sm btn-outline-secondary">Zoom In</button>
+								<button class="btn btn-sm btn-outline-secondary">Zoom Out</button>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-6">
+							<div class="card text-center">
+								<div class="card-body">
+									<img v-bind:src="totalsImg">
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="card-group">
+
+								<div class="card text-center">
+									<div class="card-body">
+										<h2 class="card-title">0</h2>
+										<p class="card-text">Active Clients</p>
+									</div>
+								</div>
+
+								<div class="card text-center">
+									<div class="card-body">
+										<h2 class="card-title">1</h2>
+										<p class="card-text">Total Clients</p>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="card-group">
+
+								<div class="card text-center">
+									<div class="card-body">
+										<h2 class="card-title">37.1 GB</h2>
+										<p class="card-text">Total Inbound</p>
+									</div>
+								</div>
+
+								<div class="card text-center">
+									<div class="card-body">
+										<h2 class="card-title">108.8 GB</h2>
+										<p class="card-text">Total Outbound</p>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="card text-center">
+								<div class="card-body">
+									<h2 class="card-title">{{interfaces.temp}}</h2>
+									<p class="card-text">Temp</p>
+								</div>
+							</div>
+
+
+
+						</div>
+					</div>
+
+					<hr>
+<!-- All interfaces -->
+<h2>Interfaces</h2>
+							<div class="card">
+								<div class="card-body">
+
+<!--
+<img class="img-responsive" src="/graph?width=450&height=150&legend=0&start=-4h&end=-1m&device=r1.tele&interface=totals">
+<img class="img-responsive" src="/graph?width=450&height=150&legend=0&start=-4h&end=-1m&device=r1.tele&interface=totals">
+<img class="img-responsive" src="/graph?width=450&height=150&legend=0&start=-4h&end=-1m&device=r1.tele&interface=totals">
+<img class="img-responsive" src="/graph?width=450&height=150&legend=0&start=-4h&end=-1m&device=r1.tele&interface=totals">
+<img class="img-responsive" src="/graph?width=450&height=150&legend=0&start=-4h&end=-1m&device=r1.tele&interface=totals">
+<img class="img-responsive" src="/graph?width=450&height=150&legend=0&start=-4h&end=-1m&device=r1.tele&interface=totals">
+<img class="img-responsive" src="/graph?width=450&height=150&legend=0&start=-4h&end=-1m&device=r1.tele&interface=totals">
+<img class="img-responsive" src="/graph?width=450&height=150&legend=0&start=-4h&end=-1m&device=r1.tele&interface=totals">
+<img class="img-responsive" src="/graph?width=450&height=150&legend=0&start=-4h&end=-1m&device=r1.tele&interface=totals">
+<img class="img-responsive" src="/graph?width=450&height=150&legend=0&start=-4h&end=-1m&device=r1.tele&interface=totals">
+<img class="img-responsive" src="/graph?width=450&height=150&legend=0&start=-4h&end=-1m&device=r1.tele&interface=totals">
+<img class="img-responsive" src="/graph?width=450&height=150&legend=0&start=-4h&end=-1m&device=r1.tele&interface=totals">
+<img class="img-responsive" src="/graph?width=450&height=150&legend=0&start=-4h&end=-1m&device=r1.tele&interface=totals">
+<img class="img-responsive" src="/graph?width=450&height=150&legend=0&start=-4h&end=-1m&device=r1.tele&interface=totals">
+-->
+
+<span v-for="(value, key, index) in interfaces['ifs']">
+		<img v-bind:src="getImage(selected, key, value.ifAlias)">
+</span>
+
+</div>
+</div>
+
+
+
+				</div>
+
+			</main>
+		</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+	<script src="https://unpkg.com/vue"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+	<script src="//unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+	<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
+	<!-- Icons -->
+	<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+	<script>
+		feather.replace()
+	</script>
+
+	<script src="app.js"></script>
+
+</body>
+</html>
+
