@@ -26,21 +26,23 @@ var db *gorm.DB
 var err error
 
 func main() {
-	db, err = gorm.Open("sqlite3", "devices.db")
+	// Flags
+	URL := flag.String("url", "http://gondul.lasse.cloud/", "URL to gondul")
+	rrdPath := flag.String("path", "rrd/", "Path to rrd files")
+	dbPath := flag.String("db", "/var/lib/gondul-rrd.sqlite", "Path to database")
+	Username := flag.String("username", "tech", "username to gondul")
+	Password := flag.String("password", "rules", "password to gondul")
+	sleep := flag.Int("sleep", 10, "Poller sleep time")
+	flag.Parse()
+
+	// Database
+	db, err = gorm.Open("sqlite3", *dbPath)
 	if err != nil {
 		panic("failed to connect database")
 	}
 	defer db.Close()
 	db.AutoMigrate(&Device{})
 	db.LogMode(true)
-
-	// Flags
-	URL := flag.String("url", "http://gondul.lasse.cloud/", "URL to gondul")
-	rrdPath := flag.String("path", "rrd/", "Path to rrd files")
-	Username := flag.String("username", "tech", "username to gondul")
-	Password := flag.String("password", "rules", "password to gondul")
-	sleep := flag.Int("sleep", 10, "Poller sleep time")
-	flag.Parse()
 
 	// Map for switch time
 	switchTime := make(map[string]string)
