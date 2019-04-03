@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	rrdPath = "./rrd/"
+	rrdPath = "../rrd/"
 )
 
 func graphHandler(c *gin.Context) {
@@ -25,6 +25,7 @@ func graphHandler(c *gin.Context) {
 	rrdDevice := c.Query("device")
 	rrdInterface := c.Query("interface")
 	rrdNight := c.Query("night")
+	rrdUgly := c.Query("ugly")
 
 	if len(rrdDevice) == 0 {
 		//TODO Return a rrd image with "no data found"
@@ -58,7 +59,7 @@ func graphHandler(c *gin.Context) {
 	g.SetSlopeMode()
 	g.SetRigid()
 	g.SetAltAutoscaleMax()
-	g.SetWatermark("rawrz <3")
+	g.SetWatermark("Nora <3")
 
 	if rrdLegend == "0" {
 		g.SetNoLegend()
