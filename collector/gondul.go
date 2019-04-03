@@ -63,6 +63,7 @@ type switches struct {
 type ifs struct {
 	IfHCOutOctets uint64 `json:"ifHCOutOctets"`
 	IfHCInOctets  uint64 `json:"ifHCInOctets"`
+	IfAlias       string `json:"ifAlias"`
 }
 
 type vcp struct {
