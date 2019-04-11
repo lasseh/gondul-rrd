@@ -1,0 +1,14 @@
+Dark: (Nineteen Eighty-Four)
+Background: #31313D
+Text: #BEC2CC
+Purple: #A500A5
+Orange: #FF7E27
+Blue: #31C0F6
+
+Old:
+Background: 
+Text: 
+Purple: 
+Orange: 
+Blue: 
+
