@@ -63,14 +63,13 @@ func graphHandler(c *gin.Context) {
 	// not finished
 	if rrdTheme == "dark" {
 		g.SetColor("BACK", "31313DFF")
-		g.SetColor("FONT", "bec2ccFF")
+		g.SetColor("FONT", "BEC2CCFF")
 		g.SetColor("CANVAS", "31313DFF")
 		g.SetColor("SHADEA", "31313DFF")
 		g.SetColor("SHADEB", "31313DFF")
 		g.SetColor("GRID", "31313DFF")
 		g.SetColor("MGRID", "FF7E2730")
 		g.SetColor("AXIS", "31313DFF")
-		// g.SetColor("FRAME", "999999FF")
 		g.SetColor("ARROW", "A500A5FF")
 	}
 	if rrdTheme == "old" {
