@@ -46,7 +46,7 @@ func UpdateRRD(rrdPath, device, iface string, in, out uint64) {
 		log.Println("Error updating rrd:", err)
 
 	}
-	log.Println("Updated file", filename)
+	// log.Println("Updated file", filename)
 }
 
 // CreateRRD should return errors

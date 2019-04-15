@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -42,7 +43,7 @@ func main() {
 	}
 	defer db.Close()
 	db.AutoMigrate(&Device{})
-	db.LogMode(true)
+	// db.LogMode(true)
 
 	// Map for switch time
 	switchTime := make(map[string]string)
@@ -55,6 +56,7 @@ func main() {
 			log.Println("Failed to poll data from API:", err)
 			os.Exit(1)
 		}
+		var updated []string
 		for k, sw := range g.Switches {
 
 			// Check if switch exists in map
@@ -111,6 +113,9 @@ func main() {
 				}
 			}
 
+			// Add switch to updated slice
+			updated = append(updated, k)
+
 			// Update timestamp map
 			switchTime[k] = g.Switches[k].Time
 		}
@@ -118,6 +123,7 @@ func main() {
 		// Gondul API time
 		gondulTime := time.Unix(g.Time, 0)
 		log.Println("Gondul timestamp:", gondulTime)
+		fmt.Printf("Updated %d switches: %v\n", len(updated), updated)
 
 		// Sleep
 		time.Sleep(time.Duration(*sleep) * time.Second)
