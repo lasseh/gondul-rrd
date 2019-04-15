@@ -4,6 +4,7 @@ import (
 	"flag"
 	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
@@ -65,11 +66,12 @@ func main() {
 		panic("failed to connect database")
 	}
 	defer db.Close()
-	db.LogMode(true)
+	//db.LogMode(true)
 
 	gin.SetMode(gin.DebugMode)
 
 	r := gin.New()
+	r.Use(cors.Default())
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
