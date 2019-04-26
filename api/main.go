@@ -79,7 +79,8 @@ func main() {
 	r.GET("/graph", graphHandler)
 
 	// Serve the interface tree list created by the collector
-	r.GET("/switches", switchHandler)
+	r.GET("/switch", switchListHandler)
+	r.GET("/switch/{id}", switchHandler)
 
 	// Index
 	r.GET("/", func(c *gin.Context) {
@@ -92,10 +93,38 @@ func main() {
 	r.Run(":8080")
 }
 
-func switchHandler(c *gin.Context) {
+func switchListHandler(c *gin.Context) {
 	var d []Device
 	sw := NewDatalol()
 	if err := db.Table("devices").Find(&d); err != nil {
+		c.AbortWithStatus(404)
+	}
+
+	for _, v := range d {
+		if _, ok := sw.Switches[v.Device]; !ok {
+			sw.Switches[v.Device] = NewSwitch()
+		}
+		sw.Switches[v.Device].Ifs[v.Interface] = v.GetIfStat()
+	}
+
+	for _, v := range sw.Switches {
+		t := &Total{}
+		v.Totals = t
+		for _, values := range v.Ifs {
+			t.Total++
+			t.IfHCOutOctets += values.IfHCOutOctets
+			t.IfHCInOctets += values.IfHCInOctets
+		}
+	}
+
+	c.JSON(200, sw)
+}
+
+func switchHandler(c *gin.Context) {
+	switchID = c.Param("id")
+	var d []Device
+	sw := NewDatalol()
+	if err := db.Table("devices").Find(&d).Where("device = ?", switchID); err != nil {
 		c.AbortWithStatus(404)
 	}
 
