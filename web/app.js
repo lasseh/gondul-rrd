@@ -1,5 +1,5 @@
-const distroTree = "https://nms.tg18.gathering.org/api/public/distro-tree";
-const switchState = "https://nms.tg18.gathering.org/api/public/switch-state";
+const distroTree = "/switches";
+const switchState = "https://public-gondul.tg19.gathering.org/api/public/switch-state";
 
 const vm = new Vue({
 	el: '#app',
@@ -16,7 +16,7 @@ const vm = new Vue({
 	},
 	mounted() {
 		axios.get(distroTree).then(response => {
-			this.results = response.data["distro-tree"]
+			this.results = response.data["switches"]
 		})
 	},
 	methods: {
