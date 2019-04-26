@@ -32,6 +32,9 @@ func graphHandler(c *gin.Context) {
 		c.String(http.StatusOK, "Not found")
 		return
 	}
+	if len(rrdTitle) == 0 || rrdTitle == "undefined" {
+		rrdTitle = "Network Traffic"
+	}
 	// Prettify interface names
 	iface := strings.Replace(rrdInterface, "/", "", -1)
 	filename := fmt.Sprintf("%s%s/%s.rrd", rrdLol, rrdDevice, iface)
