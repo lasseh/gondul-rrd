@@ -63,7 +63,6 @@ func graphHandler(c *gin.Context) {
 		g.SetNoLegend()
 	}
 	// Nightmode
-	// not finished
 	if rrdTheme == "dark" {
 		g.SetColor("BACK", "31313DFF")
 		g.SetColor("FONT", "BEC2CCFF")
